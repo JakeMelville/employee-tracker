@@ -8,13 +8,13 @@ CREATE TABLE department (
     name VARCHAR(30) UNIQUE NOT NULL
 );
 INSERT INTO department (name)
-VALUES ("Science");
+VALUES ("Sales");
 
 INSERT INTO department (name)
-VALUES ("Developer");
+VALUES ("Finance");
 
 INSERT INTO department (name)
-VALUES ("Engineer");
+VALUES ("Engineering");
                
 
 
@@ -25,6 +25,15 @@ CREATE TABLE role (
     title VARCHAR(30),
     salary INT UNSIGNED NOT NULL
 );
+INSERT INTO role (department_id, title, salary)
+VALUES (1, "Director", 100000);
+
+INSERT INTO role (department_id, title, salary)
+VALUES (2, "Manager", 75000);
+
+INSERT INTO role (department_id, title, salary)
+VALUES (3, "Associate", 50000);
+      
 
 CREATE TABLE employee (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -37,6 +46,10 @@ CREATE TABLE employee (
 );
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Jake", "Melville", 1, 2);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("John", "Name", 2, 3);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Mike", "Williams", 3, 1);
 
     -- foreign key references cascade (line14, 24 & 26)---- LOOK UP -- something along the lines of tying all the tables together
     -- will also have to do this in the role table as well
