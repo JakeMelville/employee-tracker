@@ -5,22 +5,32 @@ USE employeeDB;
 
 CREATE TABLE department (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30) UNIQUE NOT NULL               
+    name VARCHAR(30) UNIQUE NOT NULL
+);
+INSERT INTO department (name)
+VALUES ("Science");
 
-)
+INSERT INTO department (name)
+VALUES ("Developer");
+
+INSERT INTO department (name)
+VALUES ("Engineer");
+               
+
 
 CREATE TABLE role (
-    department_id INT NOT NULL UNSIGNED,
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    department_id INT UNSIGNED NOT NULL,
     Index dep_id (department_id),
     title VARCHAR(30),
-    salary INT NOT NULL UNSIGNED
-)
+    salary INT UNSIGNED NOT NULL
+);
 
 CREATE TABLE employee (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    roll_id INT NOT NULL UNSIGNED,
+    role_id INT UNSIGNED NOT NULL,
     Index role_id (role_id), 
     manager_id INT UNSIGNED,
     Index man_id (manager_id)

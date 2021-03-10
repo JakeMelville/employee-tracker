@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const connection = require('./db/connection');
+const cTable = require('console.table');
 
 async function inputData() {
     const dataChoice = await inquirer.prompt(
@@ -8,22 +9,28 @@ async function inputData() {
             type: 'list',
             name: 'addingInfo',
             message: 'What would you like to do?',
-            choices: ['Add', 'View', 'Update']
+            choices: ['View all Employees', 'View all Employees by Department', 'Add Employee', 'Remove Employee', 'Update Employee Role']
         }
     )
     switch(dataChoice.addingInfo) {
-        case 'Add':
-            const add = await addInfo();
+        case 'View all Employees':
+            const viewAll = await viewAllEmp();
             break;
-        case 'View':
-            const view = await viewInfo();
+        case 'View all Employees by Department':
+            const viewAllDept = await viewAllEmpDept();
             break;
-        case 'Update':
-            const update = await updateInfo();
+        case 'Add Employee':
+            const addEmployee = await addEmp();
+            break;
+        case 'Remove Employee':
+                const remEmployee = await remEmp();
+            break;
+        case 'Update Employee Role':
+                const update = await updateEmp();
             break;
     }
 }
-async function addInfo() {
+async function viewAllEmp() {
     const addChoices = await inquirer.prompt(
         {
             type: 'list',
@@ -44,7 +51,7 @@ async function addInfo() {
             break;
     }
 }
-async function viewInfo() {
+async function viewAllEmpDept() {
     const viewChoices = await inquirer.prompt(
         {
             type: 'list',
@@ -55,7 +62,9 @@ async function viewInfo() {
     )
     switch (viewChoices.viewOptions) {
         case 'Departments':
-            console.log("view departments");
+            console.log("view departments", connection.query('SELECT name FROM department'))
+            connection.query('SELECT name FROM department', (err, res) => {
+                if (err) throw err});
             break;
         case 'Roles':
             console.log("view roles");
@@ -65,7 +74,7 @@ async function viewInfo() {
             break;
     }
 }
-async function updateInfo() {
+async function addEmp() {
     const updateChoices = await inquirer.prompt(
         {
             type: 'list',
