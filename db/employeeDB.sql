@@ -34,7 +34,9 @@ CREATE TABLE employee (
     Index role_id (role_id), 
     manager_id INT UNSIGNED,
     Index man_id (manager_id)
-)
+);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Jake", "Melville", 1, 2);
 
     -- foreign key references cascade (line14, 24 & 26)---- LOOK UP -- something along the lines of tying all the tables together
     -- will also have to do this in the role table as well
