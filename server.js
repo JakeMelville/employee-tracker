@@ -35,7 +35,7 @@ async function userSelect() {
             connection.end();
     }
 }
-//all employees function
+//view all employees function
 function viewAllEmp() {
     console.log("viewAllEmp");
     connection.query('SELECT * FROM employee', (err, res) => {
@@ -45,7 +45,7 @@ function viewAllEmp() {
     });
 
 }
-//all department function--- 
+//view all department function--- 
 async function viewAllDept() {
     const deptData = await inquirer.prompt(
         {
@@ -68,9 +68,6 @@ async function viewAllDept() {
         case 'Engineering':
             break;
     };
-
-
-
     // connection.query('SELECT * FROM department', (err, res) => {
     //     if (err) throw err;
     //     console.table(res);
@@ -83,6 +80,9 @@ async function viewAllDept() {
     // userSelect();
     // return depInfo;
 }
+
+//tried creating a function to show employees by department 
+
 // async function viewAllEmpDept() {
 //     console.log("viewAllEmpDept");
 //     let depInfo = await connection.query('SELECT * FROM department')
@@ -110,6 +110,8 @@ async function viewAllDept() {
 //             break;
 //     }
 // }
+
+//add employees function
 async function addEmp() {
     const addEmployee = await inquirer.prompt([
         {
@@ -155,6 +157,8 @@ async function addEmp() {
         })
         userSelect();
 }
+
+//remove employees function
 async function remEmp() {
     let empRoster = [];
     let empDatabase = `SELECT first_name, last_name FROM employee`;
