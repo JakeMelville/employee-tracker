@@ -133,7 +133,7 @@ async function addEmp() {
             message: 'What is the new employees manager id number?'
         }
     ])
-    
+
 
     let first = addEmployee.firstName;
     let last = addEmployee.lastName;
@@ -151,9 +151,36 @@ async function addEmp() {
         },
         (err, res) => {
             if (err) throw err;
-            console.log(`${first } has been added!`);
+            console.log(`${first} has been added!`);
         })
+        userSelect();
 }
+async function remEmp() {
+    let empRoster = [];
+    let empDatabase = `SELECT first_name, last_name FROM employee`;
+    connection.query(empDatabase, (error, results) => {
+        if (error) {
+            return console.error(error.message);
+        }
+        for (let i = 0; i < results.length; i++) {
+        
+        const empRoster = (`${results[i].first_name} ${results[i].last_name}`);
+        console.log(empRoster);
+        }
+    });
+    const deleteEmployees = inquirer.prompt(
+        {
+            type: 'list',
+            name: 'remEmployees',
+            message: 'Which employee would you like to remove from database?',
+            choices: ['cats', 'dogs']
+        }
+    )
+    console.log("line 179", empRoster)
+};
+// console.log(res);
+
+
 
 userSelect();
 
