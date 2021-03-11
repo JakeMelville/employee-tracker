@@ -133,6 +133,7 @@ async function addEmp() {
             message: 'What is the new employees manager id number?'
         }
     ])
+    
 
     let first = addEmployee.firstName;
     let last = addEmployee.lastName;
@@ -143,21 +144,15 @@ async function addEmp() {
     connection.query(
         'INSERT INTO employee SET ?',
         {
-          first_name: `${first}`,
-          last_name: `${last}`,
-          role_id: `${role}`,
-          manager_id: `${manager}`
+            first_name: `${first}`,
+            last_name: `${last}`,
+            role_id: `${role}`,
+            manager_id: `${manager}`
         },
         (err, res) => {
-          if (err) throw err;
-          console.table(res);
-    // connection.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
-    //  VALUES ('${first}', '${last}', ${role}, ${manager});`, (err, res) => {
-    //     if (err) throw err;
-    //     console.table(res);
-    })
-
-
+            if (err) throw err;
+            console.log(`${first } has been added!`);
+        })
 }
 
 userSelect();
