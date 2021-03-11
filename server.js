@@ -60,8 +60,8 @@ async function viewAllDept() {
             let query = 'SELECT employee.first_name, employee.last_name, employee.role_id, department.name, department.id';
             query += 'FROM department.name INNER JOIN employee ON ('
 
-        
-        
+
+
             break;
         case 'Finance':
             break;
@@ -74,62 +74,93 @@ async function viewAllDept() {
     // connection.query('SELECT * FROM department', (err, res) => {
     //     if (err) throw err;
     //     console.table(res);
-        //     userSelect();
-        // })
+    //     userSelect();
+    // })
 
 
-        // let depInfo = await connection.query('SELECT * FROM department')
-        // console.table(depInfo);
-        // userSelect();
-        // return depInfo;
-    }
-    // async function viewAllEmpDept() {
-    //     console.log("viewAllEmpDept");
-    //     let depInfo = await connection.query('SELECT * FROM department')
-    //     // console.table(depInfo);
-    //     const deptChoice = await inquirer.prompt(
-    //         {
-    //             type: 'list',
-    //             name: 'department',
-    //             message: 'Which department?',
-    //             choices: ['Sales', 'Engineering', 'Finance']
-    //         }
-    //     )
-    //     switch (deptChoice.department) {
-    //         case 'Sales':
-    //             const salesDept = depInfo.find(department => department.name = "Sales");
-    //             const roles = await connection.query('SELECT * FROM roles WHERE department_id = ?', salesDept.id)
-    //             console.log("roles", roles)
-    //             connection.query('SELECT * FROM employee WHERE role_id = ?', salesDept.id) //pass role id in
-    //             break;
-    //         case 'Engineering':
+    // let depInfo = await connection.query('SELECT * FROM department')
+    // console.table(depInfo);
+    // userSelect();
+    // return depInfo;
+}
+// async function viewAllEmpDept() {
+//     console.log("viewAllEmpDept");
+//     let depInfo = await connection.query('SELECT * FROM department')
+//     // console.table(depInfo);
+//     const deptChoice = await inquirer.prompt(
+//         {
+//             type: 'list',
+//             name: 'department',
+//             message: 'Which department?',
+//             choices: ['Sales', 'Engineering', 'Finance']
+//         }
+//     )
+//     switch (deptChoice.department) {
+//         case 'Sales':
+//             const salesDept = depInfo.find(department => department.name = "Sales");
+//             const roles = await connection.query('SELECT * FROM roles WHERE department_id = ?', salesDept.id)
+//             console.log("roles", roles)
+//             connection.query('SELECT * FROM employee WHERE role_id = ?', salesDept.id) //pass role id in
+//             break;
+//         case 'Engineering':
 
-    //             break;
-    //         case 'Finance':
+//             break;
+//         case 'Finance':
 
-    //             break;
-    //     }
-    // }
-    async function addEmp() {
-            const updateChoices = await inquirer.prompt(
-                {
-                    type: 'list',
-                    name: 'updateOptions',
-                    message: 'Would you like to update employees or roles?',
-                    choices: ['Employees', 'Roles']
-                }
-            )
-            switch (updateChoices.updateOptions) {
-                case 'Employees':
-                    console.log("update employees");
-                    break;
-                case 'Roles':
-                    console.log("update roles");
-                    break;
-            }
+//             break;
+//     }
+// }
+async function addEmp() {
+    const addEmployee = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'What is the new employees first name?'
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'What is the new employees last name?'
+        },
+        {
+            type: 'input',
+            name: 'roleId',
+            message: 'What is the new employees role id?'
+        },
+        {
+            type: 'input',
+            name: 'managerId',
+            message: 'What is the new employees manager id number?'
         }
+    ])
 
-    userSelect();
+    let first = addEmployee.firstName;
+    let last = addEmployee.lastName;
+    let role = addEmployee.roleId;
+    let manager = addEmployee.managerId;
+
+
+    connection.query(
+        'INSERT INTO employee SET ?',
+        {
+          first_name: `${first}`,
+          last_name: `${last}`,
+          role_id: `${role}`,
+          manager_id: `${manager}`
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.table(res);
+    // connection.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    //  VALUES ('${first}', '${last}', ${role}, ${manager});`, (err, res) => {
+    //     if (err) throw err;
+    //     console.table(res);
+    })
+
+
+}
+
+userSelect();
 
 
 
