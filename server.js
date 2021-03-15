@@ -3,13 +3,13 @@ const mysql = require('mysql');
 const connection = require('./db/connection');
 const cTable = require('console.table');
 
-async function userSelect() {
-    const dataChoice = await inquirer.prompt(
+function userSelect() {
+    const dataChoice = inquirer.prompt(
         {
             type: 'list',
             name: 'addingInfo',
             message: 'What would you like to do?',
-            choices: ['View all Employees', 'View all Departments', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'Exit']
+            choices: ['View all Employees', 'View all Departments', 'View all Roles', 'Add Employee', 'Add Deparment', 'Add role', 'Update Employee Role', 'Exit']
         }
     )
     switch (dataChoice.addingInfo) {
@@ -19,13 +19,16 @@ async function userSelect() {
         case 'View all Departments':
             const viewDept = viewAllDept();
             break;
-        // case 'View all Employees by Department':
-        //     const empByDept = viewAllEmpDept();
-        //     break;
+        case 'View all Roles':
+            const empByDept = viewAllEmpDept();
+            break;
         case 'Add Employee':
             const addEmployee = addEmp();
             break;
-        case 'Remove Employee':
+        case 'Add Department':
+            const remEmployee = remEmp();
+            break;
+        case 'Add Department':
             const remEmployee = remEmp();
             break;
         case 'Update Employee Role':
@@ -155,7 +158,7 @@ async function addEmp() {
             if (err) throw err;
             console.log(`${first} has been added!`);
         })
-        userSelect();
+    userSelect();
 }
 
 //remove employees function
@@ -167,9 +170,9 @@ async function remEmp() {
             return console.error(error.message);
         }
         for (let i = 0; i < results.length; i++) {
-        
-        const empRoster = (`${results[i].first_name} ${results[i].last_name}`);
-        console.log(empRoster);
+
+            const empRoster = (`${results[i].first_name} ${results[i].last_name}`);
+            // console.log(empRoster);
         }
     });
     const deleteEmployees = inquirer.prompt(
@@ -187,6 +190,29 @@ async function remEmp() {
 
 
 userSelect();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
