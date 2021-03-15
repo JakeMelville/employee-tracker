@@ -9,30 +9,30 @@ async function userSelect() {
             type: 'list',
             name: 'addingInfo',
             message: 'What would you like to do?',
-            choices: ['View all Employees', 'View all Departments', 'View all Roles', 'Add Employee', 'Add Deparment', 'Add role', 'Update Employee Role', 'Exit']
+            choices: ['View all Employees', 'View all Departments', 'View all Roles', 'Add Employee', 'Add Department', 'Add Role', 'Update Employee Role', 'Exit']
         }
     )
     switch (dataChoice.addingInfo) {
         case 'View all Employees':
-            const viewAll = viewAllEmp();
+            viewAllEmp();
             break;
         case 'View all Departments':
-            const viewDept = viewAllDept();
+            viewAllDept();
             break;
         case 'View all Roles':
-            const empByDept = viewAllRoles();
+            viewAllRoles();
             break;
         case 'Add Employee':
-            const addEmployee = addEmp();
+            addEmp();
             break;
         case 'Add Department':
-            const addDept = addDept();
+            addDept();
             break;
         case 'Add Role':
-            const addRole = addRole();
+            addRole();
             break;
         case 'Update Employee Role':
-            const update = updateEmp();
+            updateEmp();
             break;
         default:
             connection.end();
@@ -51,8 +51,8 @@ function viewAllEmp() {
 //view all department function--- 
 function viewAllDept() {
     console.log('viewAllDept');
-    connection.query('SELECT * FROM department', (err,res) => {
-        if(err) throw err;
+    connection.query('SELECT * FROM department', (err, res) => {
+        if (err) throw err;
         console.table(res);
         userSelect()
     })
@@ -60,8 +60,8 @@ function viewAllDept() {
 //view all roles
 function viewAllRoles() {
     console.log('viewAllDept');
-    connection.query('SELECT * FROM role', (err,res) => {
-        if(err) throw err;
+    connection.query('SELECT * FROM role', (err, res) => {
+        if (err) throw err;
         console.table(res);
         userSelect()
     })
@@ -113,8 +113,68 @@ async function addEmp() {
         })
     userSelect();
 }
+//add department function
+async function addDept() {
+    const deptAdd = await inquirer.prompt(
+        {
+            type: 'input',
+            name: 'deptName',
+            message: 'What is the new department name?'
+        }
+    )
+
+    let departmentName = deptAdd.deptName;
 
 
+    connection.query(
+        'INSERT INTO department SET ?',
+        {
+            name: `${departmentName}`,
+        },
+        (err, res) => {
+            if (err) throw err;
+            console.log(`${departmentName} has been added!`);
+        })
+    userSelect();
+}
+
+async function addRole() {
+    const roleAdd = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'deptId',
+            message: 'What is the new roles id number?'
+        },
+        {
+            type: 'input',
+            name: 'roleTitle',
+            messgae: 'What is the new role name?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the new role salary?'
+        }
+    ])
+    let roleId = roleAdd.deptId;
+    let title = roleAdd.roleTitle;
+    let roleSal = roleAdd.salary;
+
+
+    connection.query(
+        'INSERT INTO role SET ?',
+        {
+            department_id: `${roleId}`,
+            title: `${title}`,
+            salary: `${roleSal}`
+
+        },
+        (err, res) => {
+            if (err) throw err;
+            console.log(`${title} has been added!`);
+        })
+    userSelect();
+}
 
 
 userSelect();
