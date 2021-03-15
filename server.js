@@ -175,6 +175,24 @@ async function addRole() {
         })
     userSelect();
 }
+async function updateEmp() {
+    const updateEmpRole = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'What is the id number of the employee you would like to update?'
+        },
+        {
+            type: 'input',
+            name: 'roleId',
+            message: "What would you like this employee's new role id to be?"
+        }
+    ])
+    let employeeId = updateEmpRole.id;
+    let newRoleId = updateEmpRole.roleId;
 
-
+    connection.query(`UPDATE employee SET role_id = ${newRoleId} WHERE id = ${employeeId}`)
+    // console.log(updateEmpRole)
+    userSelect();
+}
 userSelect();
