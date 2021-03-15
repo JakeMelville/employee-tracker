@@ -20,16 +20,16 @@ function userSelect() {
             const viewDept = viewAllDept();
             break;
         case 'View all Roles':
-            const empByDept = viewAllEmpDept();
+            const empByDept = viewAllRoles();
             break;
         case 'Add Employee':
             const addEmployee = addEmp();
             break;
         case 'Add Department':
-            const remEmployee = remEmp();
+            const remEmployee = addDept();
             break;
-        case 'Add Department':
-            const remEmployee = remEmp();
+        case 'Add Role':
+            const remEmployee = addRole();
             break;
         case 'Update Employee Role':
             const update = updateEmp();
@@ -49,70 +49,17 @@ function viewAllEmp() {
 
 }
 //view all department function--- 
-async function viewAllDept() {
-    const deptData = await inquirer.prompt(
-        {
-            type: 'list',
-            name: 'dataByDept',
-            message: 'View employees by department',
-            choices: ['Sales', 'Finance', 'Engineering']
-        }
-    )
-    switch (deptData.dataByDept) {
-        case 'Sales':
-            let query = 'SELECT employee.first_name, employee.last_name, employee.role_id, department.name, department.id';
-            query += 'FROM department.name INNER JOIN employee ON ('
-
-
-
-            break;
-        case 'Finance':
-            break;
-        case 'Engineering':
-            break;
-    };
-    // connection.query('SELECT * FROM department', (err, res) => {
-    //     if (err) throw err;
-    //     console.table(res);
-    //     userSelect();
-    // })
-
-
-    // let depInfo = await connection.query('SELECT * FROM department')
-    // console.table(depInfo);
-    // userSelect();
-    // return depInfo;
+function viewAllDept() {
+    console.log('viewAllDept');
+    connection.query('SELECT * FROM department', (err,res) => {
+        if(err) throw err;
+        console.logtable(res);
+        userSelect()
+    })
 }
 
-//tried creating a function to show employees by department 
 
-// async function viewAllEmpDept() {
-//     console.log("viewAllEmpDept");
-//     let depInfo = await connection.query('SELECT * FROM department')
-//     // console.table(depInfo);
-//     const deptChoice = await inquirer.prompt(
-//         {
-//             type: 'list',
-//             name: 'department',
-//             message: 'Which department?',
-//             choices: ['Sales', 'Engineering', 'Finance']
-//         }
-//     )
-//     switch (deptChoice.department) {
-//         case 'Sales':
-//             const salesDept = depInfo.find(department => department.name = "Sales");
-//             const roles = await connection.query('SELECT * FROM roles WHERE department_id = ?', salesDept.id)
-//             console.log("roles", roles)
-//             connection.query('SELECT * FROM employee WHERE role_id = ?', salesDept.id) //pass role id in
-//             break;
-//         case 'Engineering':
-
-//             break;
-//         case 'Finance':
-
-//             break;
-//     }
-// }
+   
 
 //add employees function
 async function addEmp() {
@@ -160,32 +107,6 @@ async function addEmp() {
         })
     userSelect();
 }
-
-//remove employees function
-async function remEmp() {
-    let empRoster = [];
-    let empDatabase = `SELECT first_name, last_name FROM employee`;
-    connection.query(empDatabase, (error, results) => {
-        if (error) {
-            return console.error(error.message);
-        }
-        for (let i = 0; i < results.length; i++) {
-
-            const empRoster = (`${results[i].first_name} ${results[i].last_name}`);
-            // console.log(empRoster);
-        }
-    });
-    const deleteEmployees = inquirer.prompt(
-        {
-            type: 'list',
-            name: 'remEmployees',
-            message: 'Which employee would you like to remove from database?',
-            choices: ['cats', 'dogs']
-        }
-    )
-    console.log("line 179", empRoster)
-};
-// console.log(res);
 
 
 
@@ -259,3 +180,109 @@ userSelect();
 //         console.log("view employees");
 //         break;
 // }
+ 
+// const deptData = inquirer.prompt(
+//     {
+//         type: 'list',
+//         name: 'dataByDept',
+//         message: 'View employees by department',
+//         choices: ['Sales', 'Finance', 'Engineering']
+//     }
+// )
+// switch (deptData.dataByDept) {
+//     case 'Sales':
+//         let query = 'SELECT employee.first_name, employee.last_name, employee.role_id, department.name, department.id';
+//         query += 'FROM department.name INNER JOIN employee ON ('
+
+
+
+//         break;
+//     case 'Finance':
+//         break;
+//     case 'Engineering':
+//         break;
+// };
+// connection.query('SELECT * FROM department', (err, res) => {
+//     if (err) throw err;
+//     console.table(res);
+//     userSelect();
+// })
+
+
+// let depInfo = await connection.query('SELECT * FROM department')
+// console.table(depInfo);
+// userSelect();
+// return depInfo;
+
+
+//tried creating a function to show employees by department 
+
+// async function viewAllEmpDept() {
+//     console.log("viewAllEmpDept");
+//     let depInfo = await connection.query('SELECT * FROM department')
+//     // console.table(depInfo);
+//     const deptChoice = await inquirer.prompt(
+//         {
+//             type: 'list',
+//             name: 'department',
+//             message: 'Which department?',
+//             choices: ['Sales', 'Engineering', 'Finance']
+//         }
+//     )
+//     switch (deptChoice.department) {
+//         case 'Sales':
+//             const salesDept = depInfo.find(department => department.name = "Sales");
+//             const roles = await connection.query('SELECT * FROM roles WHERE department_id = ?', salesDept.id)
+//             console.log("roles", roles)
+//             connection.query('SELECT * FROM employee WHERE role_id = ?', salesDept.id) //pass role id in
+//             break;
+//         case 'Engineering':
+
+//             break;
+//         case 'Finance':
+
+//             break;
+//     }
+// }
+// connection.query('SELECT * FROM department', (err, res) => {
+//     if (err) throw err;
+//     console.table(res);
+//     userSelect();
+// })
+
+
+// let depInfo = await connection.query('SELECT * FROM department')
+// console.table(depInfo);
+// userSelect();
+// return depInfo;
+
+
+//tried creating a function to show employees by department 
+
+// async function viewAllEmpDept() {
+//     console.log("viewAllEmpDept");
+//     let depInfo = await connection.query('SELECT * FROM department')
+//     // console.table(depInfo);
+//     const deptChoice = await inquirer.prompt(
+//         {
+//             type: 'list',
+//             name: 'department',
+//             message: 'Which department?',
+//             choices: ['Sales', 'Engineering', 'Finance']
+//         }
+//     )
+//     switch (deptChoice.department) {
+//         case 'Sales':
+//             const salesDept = depInfo.find(department => department.name = "Sales");
+//             const roles = await connection.query('SELECT * FROM roles WHERE department_id = ?', salesDept.id)
+//             console.log("roles", roles)
+//             connection.query('SELECT * FROM employee WHERE role_id = ?', salesDept.id) //pass role id in
+//             break;
+//         case 'Engineering':
+
+//             break;
+//         case 'Finance':
+
+//             break;
+//     }
+// 
